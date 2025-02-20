@@ -1,33 +1,28 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven 3.8.4' // Ensure Maven is installed in Jenkins
-    }
-
     environment {
-        SONARQUBE_URL = 'http://34.229.14.188:9000'
+        SONAR_TOKEN = credentials('sonarqube-token')
+        SONAR_HOST_URL = 'http://34.229.14.188:9000'
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/Muhammad-Awab/jenkins-sonarqube' // Change to your repository
+                git 'https://github.com/Muhammad-Awab/jenkins-sonarqube.git'
             }
         }
 
         stage('Build and Unit Test') {
             steps {
-                sh 'mvn clean test' // Running unit tests
-                echo 'Unit Tests Completed'
+                sh 'mvn clean test'
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    sh 'mvn clean verify sonar:sonar'
-                    echo 'SonarQube Analysis Completed'
+                    sh 'mvn clean verify sonar:sonar -Dsonar.login=$SONAR_TOKEN'
                 }
             }
         }

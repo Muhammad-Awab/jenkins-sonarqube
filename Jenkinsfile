@@ -1,5 +1,8 @@
 pipeline {
     agent any
+   tools {
+            maven 'Maven 3.8.4' // Ensure Maven is installed in Jenkins
+   }
 
     environment {
         SONAR_TOKEN = credentials('sonarqube-token')

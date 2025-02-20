@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/your-repo/your-project.git' // Change to your repository
+                git 'https://github.com/Muhammad-Awab/jenkins-sonarqube' // Change to your repository
             }
         }
 

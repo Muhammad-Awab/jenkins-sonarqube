@@ -77,6 +77,8 @@ post {
             channel: '#testing',
             color: currentBuild.currentResult == 'SUCCESS' ? 'good' : 'danger',
             message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"
+            tokenCredentialId: 'slack-webhook'  
+
         )
     }
 }

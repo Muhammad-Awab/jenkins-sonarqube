@@ -50,7 +50,7 @@ pipeline {
                     artifacts: [
                         [artifactId: 'vproapp',
                          classifier: '',
-                         file: 'target/vprofile-v2.war',
+                         file: 'target/test-springboot-0.0.1-SNAPSHOT.war',
                          type: 'war']
                     ]
                 )

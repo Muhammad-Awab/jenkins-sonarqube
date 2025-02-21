@@ -1,12 +1,19 @@
 pipeline {
     agent any
-   tools {
-            maven 'Maven 3.8.4' // Ensure Maven is installed in Jenkins
-   }
+
+    tools {
+        maven 'Maven 3.8.4'
+    }
 
     environment {
         SONAR_TOKEN = credentials('sonarqube-token')
         SONAR_HOST_URL = 'http://35.174.6.122:9000'
+        SNAP_REPO = "maven-snapshots"
+        RELEASE_REPO = "maven-releases"
+        NEXUS_USER = "admin"
+        NEXUS_PASS = credentials('nexuslogin')
+        NEXUS_IP = "http://98.84.159.218"
+        NEXUS_PORT = "8081"
     }
 
     stages {
@@ -30,11 +37,36 @@ pipeline {
             }
         }
 
+        stage('Upload Artifact to Nexus') {
+            steps {
+                nexusArtifactUploader(
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    nexusUrl: "${NEXUS_IP}:${NEXUS_PORT}",
+                    groupId: 'QA',
+                    version: "${env.BUILD_ID}-${env.BUILD_TIMESTAMP}",
+                    repository: "${RELEASE_REPO}",
+                    credentialsId: "nexuslogin",
+                    artifacts: [
+                        [artifactId: 'vproapp',
+                         classifier: '',
+                         file: 'target/vprofile-v2.war',
+                         type: 'war']
+                    ]
+                )
+            }
+        }
 
         stage("Quality Gate") {
             steps {
-                waitForQualityGate abortPipeline: true
-                echo 'Quality Gate Completed'
+                script {
+                    timeout(time: 10, unit: 'MINUTES') {
+                        def qualityGate = waitForQualityGate()
+                        if (qualityGate.status != 'OK') {
+                            error "Quality Gate failed: ${qualityGate.status}"
+                        }
+                    }
+                }
             }
         }
     }

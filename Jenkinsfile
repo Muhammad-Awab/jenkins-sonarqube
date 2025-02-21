@@ -6,7 +6,7 @@ pipeline {
 
     environment {
         SONAR_TOKEN = credentials('sonarqube-token')
-        SONAR_HOST_URL = 'http://34.229.14.188:9000'
+        SONAR_HOST_URL = 'http://35.174.6.122:9000'
     }
 
     stages {

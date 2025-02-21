@@ -43,12 +43,12 @@ pipeline {
                     nexusVersion: 'nexus3',
                     protocol: 'http',
                     nexusUrl: "${NEXUS_IP}:${NEXUS_PORT}",
-                    groupId: 'QA',
+                    groupId: 'assesment2',
                     version: "${env.BUILD_ID}-${env.BUILD_TIMESTAMP}",
                     repository: "${RELEASE_REPO}",
                     credentialsId: "nexuslogin",
                     artifacts: [
-                        [artifactId: 'vproapp',
+                        [artifactId: 'artifact',
                          classifier: '',
                          file: 'target/test-springboot-0.0.1-SNAPSHOT.jar',
                          type: 'jar']

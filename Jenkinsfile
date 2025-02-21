@@ -12,7 +12,7 @@ pipeline {
         RELEASE_REPO = "maven-releases"
         NEXUS_USER = "admin"
         NEXUS_PASS = credentials('nexuslogin')
-        NEXUS_IP = "http://98.84.159.218"
+        NEXUS_IP = "98.84.159.218"
         NEXUS_PORT = "8081"
     }
 

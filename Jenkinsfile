@@ -50,8 +50,8 @@ pipeline {
                     artifacts: [
                         [artifactId: 'vproapp',
                          classifier: '',
-                         file: 'target/test-springboot-0.0.1-SNAPSHOT.war',
-                         type: 'war']
+                         file: 'target/test-springboot-0.0.1-SNAPSHOT.jar',
+                         type: 'jar']
                     ]
                 )
             }
